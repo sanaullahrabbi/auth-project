@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from app_auth.models import User
 from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.models import Permission
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -27,3 +29,16 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
 
         return User.objects.create_user(**validated_data)
+
+
+class PermissionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Permission
+        fields = "__all__"
+
+class UserPermissionSerializer(serializers.ModelSerializer):
+    user_serializers = PermissionSerializer(read_only=True, many=True)
+    class Meta:
+        model = User
+        fields = ('user_serializers',)
+
