@@ -20,7 +20,7 @@ class User(AbstractUser):
         upload_to="profile_picture/%Y/%d/%b", null=True, blank=True
     )
 
-
+    
     def save(self, *args, **kwargs):
         self.full_name = self.get_full_name()
         super().save(*args, **kwargs)
