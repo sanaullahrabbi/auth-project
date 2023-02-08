@@ -6,6 +6,8 @@ class RoleSerializer(serializers.ModelSerializer):
         model = Role
         fields = '__all__'
 
+from django.contrib.auth.models import Permission
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -75,6 +77,15 @@ class ChangePasswordSerializer(serializers.ModelSerializer):
             instance.save()
             return instance
 
+
+class PermissionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Permission
+        fields = "__all__"
+
+class UserPermissionSerializer(serializers.ModelSerializer):
+    user_serializers = PermissionSerializer(read_only=True, many=True)
     class Meta:
         model = User
-        fields = ['old_password', 'new_password','re_new_password']
+        fields = ('user_serializers',)
+

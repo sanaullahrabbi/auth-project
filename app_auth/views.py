@@ -1,9 +1,15 @@
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, UpdateAPIView
-from rest_framework.permissions import IsAuthenticated
-from app_auth.serializers import UserSerializer, ChangePasswordSerializer
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly 
+from app_auth.serializers import UserSerializer, ChangePasswordSerializer , PermissionSerializer
 from app_auth.models import User
 from rest_framework.response import Response
 from rest_framework import status
+from django.http import HttpResponse
+from rest_framework.response import Response
+from rest_framework import status
+from django.contrib.auth.models import Permission
+from django.shortcuts import render
+
 
 class UserListCreateView(ListCreateAPIView):
     permission_classes = []
@@ -64,3 +70,28 @@ class ChangePasswordView(UpdateAPIView):
 #             user.save()
 #             return Response(serializer.data)    
 #         return Response({'message':True})
+class PermissionListCreateApiView(ListCreateAPIView):
+    permission_classes = []
+    serializer_class = PermissionSerializer
+    queryset = Permission.objects.all()
+
+
+class UserPermissionListcreateApiView(ListCreateAPIView):
+    permission_classes = []
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+    def get(self, request, *args, **kwargs):
+        print(request.user.user_permissions.all())
+        print(request.user)
+        return self.list(request, *args, **kwargs)
+    
+
+# def test(request):
+#     query = Permission.objects.get(codename='add_logentry')
+#     print('query ', query)
+#     request.user.user_permissions.add(query)
+#     print(request.user)
+#     return HttpResponse('hello')
+
+def test(request):
+    return render(request, 'index.html', context={})
