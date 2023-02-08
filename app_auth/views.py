@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import Permission
+from django.shortcuts import render
 
 
 class UserListCreateView(ListCreateAPIView):
@@ -42,3 +43,6 @@ class UserPermissionListcreateApiView(ListCreateAPIView):
 #     request.user.user_permissions.add(query)
 #     print(request.user)
 #     return HttpResponse('hello')
+
+def test(request):
+    return render(request, 'index.html', context={})
