@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from app_auth.models import User
+from app_auth.models import User,Role
 
 from .forms import CustomUserChangeForm, CustomUserCreationForm
 
@@ -22,21 +22,22 @@ class CustomUserAdmin(UserAdmin):
         "is_staff",
         "is_active",
     )
-    # fieldsets = (
-    #     (None, {"fields": ("email", "password")}),
-    #     ("Permissions", {"fields": ("is_staff", "is_active", "groups", "user_permissions")}),
-    # )
-    # add_fieldsets = (
-    #     (None, {
-    #         "classes": ("wide",),
-    #         "fields": (
-    #             "email", "password1", "password2", "is_staff",
-    #             "is_active", "groups", "user_permissions"
-    #         )}
-    #     ),
-    # )
+    fieldsets = (
+        (None, {"fields": ("email", "password",'roles','is_user','is_admin')}),
+        ("Permissions", {"fields": ("is_staff", "is_active","is_superuser", "groups", "user_permissions")}),
+    )
+    add_fieldsets = (
+        (None, {
+            "classes": ("wide",),
+            "fields": (
+                "email", "password1", "password2", "is_staff",
+                "is_active", "groups", "user_permissions"
+            )}
+        ),
+    )
     search_fields = ("username","email")
     ordering = ("username","email",)
 
 
 admin.site.register(User, CustomUserAdmin)
+admin.site.register(Role)
