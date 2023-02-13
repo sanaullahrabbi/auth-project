@@ -1,13 +1,21 @@
 from django.urls import path
 
-from app_auth.views import (ChangePasswordView, GroupListCreateView,
-                            GroupUpdateDeleteView, PermissionListCreateApiView,
-                            UserGroupListCreateView,
-                            UserGroupRetriveUpdateDeleteView,
-                            UserListCreateView, UserPermissionListCreateView,
-                            UserPermissionRetriveUpdateDeleteView,
-                            UserRetriveUpdateDeleteView,
-                            UserRoleListCreateView, test)
+from app_auth.views import (
+    ChangePasswordView,
+    GroupListCreateView,
+    GroupUpdateDeleteView,
+    PermissionListCreateApiView,
+    UserGroupListCreateView,
+    UserGroupRetriveUpdateDeleteView,
+    UserListCreateView,
+    UserPermissionListCreateView,
+    UserPermissionRetriveUpdateDeleteView,
+    UserRetriveUpdateDeleteView,
+    UserRoleListCreateView,
+    PasswordReset,
+    ResetPasswordAPI,
+    test,
+)
 
 app_name = "app_auth"
 
@@ -54,6 +62,17 @@ urlpatterns = [
         "user-change-password/<int:pk>/",
         ChangePasswordView.as_view(),
         name="users_change_password",
+    ),
+    # --- Reset Password ---
+    path(
+        "password-reset/",
+        PasswordReset.as_view(),
+        name="request-password-reset",
+    ),
+    path(
+        "password-reset/<str:encoded_pk>/<str:token>/",
+        ResetPasswordAPI.as_view(),
+        name="reset-password",
     ),
     path("test/", test),
 ]

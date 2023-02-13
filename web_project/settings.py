@@ -172,8 +172,8 @@ REST_FRAMEWORK = {
     # 'DEFAULT_PERMISSION_CLASSES': (
     #     'rest_framework.permissions.IsAuthenticated',
     # ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     )
 }
 
@@ -209,7 +209,7 @@ SIMPLE_JWT = {
 
 
 SESSION_COOKIE_AGE = 31536000  # 1year
-
+PASSWORD_RESET_TIMEOUT = 600
 
 AUTH_USER_MODEL = "app_auth.User"
 

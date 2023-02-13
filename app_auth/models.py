@@ -39,7 +39,8 @@ class User(AbstractUser):
     )
 
     roles = models.ManyToManyField(Role, blank=True)
-
+    ip = models.CharField(max_length=20,null=True,blank=True)
+    
     is_user = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
 
