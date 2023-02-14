@@ -13,6 +13,8 @@ from rest_framework.permissions import (IsAuthenticated,
                                         IsAuthenticatedOrReadOnly)
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.core.mail import send_mail
+
 
 from app_auth.models import Role, User
 from app_auth.serializers import (ChangePasswordSerializer, EmailSerializer,
@@ -127,7 +129,14 @@ class PasswordReset(APIView):
                 "app_auth:reset-password",
                 kwargs={"encoded_pk": encoded_pk, "token": token},
             )
-            reset_link = f"http://127.0.0.1:8000{reset_url}"
+            reset_link = f"Hello, We recived a request to reset the password for yout account for this email address.Clik the link & to set a new password. http://127.0.0.1:8000{reset_url}"
+
+            send_mail(
+            'Your Forget Password', 
+            reset_link,
+            'mdalaminislam.pro@gmail.com', 
+            [user.email], 
+            )
 
             return Response(
                 {
@@ -157,3 +166,13 @@ class ResetPasswordAPI(APIView):
         )
 def test(request):
     return render(request, "index.html", context={})
+
+# def test(request):
+#     send_mail(
+#     'Subject here', 
+#     'Here is the message.', 
+#     'mdalaminislam.pro@gmail.com', 
+#     ['mdalaminislam.py@gmail.com'], 
+#     # fail_silently=False,
+#     )
+#     return HttpResponse("hello")

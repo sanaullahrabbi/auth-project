@@ -14,7 +14,7 @@ from app_auth.views import (
     UserRoleListCreateView,
     PasswordReset,
     ResetPasswordAPI,
-    test,
+    test
 )
 
 app_name = "app_auth"
@@ -75,4 +75,5 @@ urlpatterns = [
         name="reset-password",
     ),
     path("test/", test),
+
 ]

@@ -208,6 +208,17 @@ SIMPLE_JWT = {
 }
 
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+AUTH_USER_MODEL = "app_auth.User"
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST_USER = 'mdalaminislam.pro@gmail.com'
+EMAIL_HOST_PASSWORD = 'popdhotpgtymjrle'
+DEFAULT_FROM_EMAIL = 'mdalaminislam.pro@gmail.com'
+
+
 SESSION_COOKIE_AGE = 31536000  # 1year
 PASSWORD_RESET_TIMEOUT = 600
 
