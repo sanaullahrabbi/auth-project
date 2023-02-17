@@ -14,6 +14,8 @@ from rest_framework.permissions import (IsAuthenticated,
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 
 
 from app_auth.models import Role, User
@@ -129,19 +131,22 @@ class PasswordReset(APIView):
                 "app_auth:reset-password",
                 kwargs={"encoded_pk": encoded_pk, "token": token},
             )
-            reset_link = f"Hello, We recived a request to reset the password for yout account for this email address.Clik the link & to set a new password. http://127.0.0.1:8000{reset_url}"
-
+            context = {}
+            context["reset_link"] = reset_url
+            html_content = render_to_string("email.html", context)
+            html_content = strip_tags(html_content)
             send_mail(
             'Your Forget Password', 
-            reset_link,
+            html_content,
             'mdalaminislam.pro@gmail.com', 
             [user.email], 
+            
             )
 
             return Response(
                 {
                     "message":
-                    f"Your password rest link: {reset_link}"
+                    f"Your password rest link: http://127.0.0.1:8000{ reset_url }"
                 },
                 status=status.HTTP_200_OK,
             )
